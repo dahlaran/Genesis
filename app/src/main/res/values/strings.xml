@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Genesis</string>
+
+
+    <!-- Errors -->
+    <string name="call_number_exceed_limitation">Account blocked due exceeding calls, wait 10 minutes</string>
+
+</resources>
