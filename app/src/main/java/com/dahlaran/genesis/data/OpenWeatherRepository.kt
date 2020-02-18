@@ -46,4 +46,8 @@ object OpenWeatherRepository {
             weatherLiveData.postValue(weather)
         }
     }
+
+    fun getInstanceOfLiveData() : LiveData<OpenWeatherApiWeather?> {
+        return weatherLiveData
+    }
 }
