@@ -13,10 +13,12 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
     private lateinit var weatherData: LiveData<OpenWeatherApiWeather?>
 
     fun getWeatherUsingCoordinate(location: Location?): LiveData<OpenWeatherApiWeather?> {
-        // If observer is already initialize, the observer has bee
+        // If observer is already initialize, the observer don't have to be
         if (!::weatherData.isInitialized) {
             location?.let {
                 weatherData = OpenWeatherRepository.initialiseWeatherValue(it.latitude.toInt(), it.longitude.toInt())
+            }.run {
+                weatherData = OpenWeatherRepository.getInstanceOfLiveData()
             }
         } else {
             location?.let {

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="very_small_margin">2dp</dimen>
+    <dimen name="small_margin">4dp</dimen>
+    <dimen name="base_margin">8dp</dimen>
+    <dimen name="big_margin">12dp</dimen>
+    <dimen name="very_big_margin">16dp</dimen>
+    <dimen name="very_small_textSize">8sp</dimen>
+    <dimen name="small_textSize">12sp</dimen>
+    <dimen name="base_textSize">14sp</dimen>
+    <dimen name="big_textSize">16sp</dimen>
+    <dimen name="very_big_textSize">20sp</dimen>
+    <dimen name="title_textSize">24sp</dimen>
+
+    <!--  Layout dimension  -->
+    <dimen name="current_weather_image_width">120dp</dimen>
+    <dimen name="current_weather_image_height">120dp</dimen>
+</resources>
