@@ -7,15 +7,15 @@
 
 
     <!-- Current Weather Layout -->
-    <string name="temperature_menu">Temperature : %1$.2f</string>
-    <string name="feels_like_menu">Feels like : %1$.2f</string>
-    <string name="temp_min_menu">Temp min : %1$.2f</string>
-    <string name="temp_max_menu">Temp max : %1$.2f</string>
+    <string name="temperature_menu">Temperature : %1$.2f °C</string>
+    <string name="feels_like_menu">Feels like : %1$.2f °C</string>
+    <string name="temp_min_menu">Temp min : %1$.2f °C</string>
+    <string name="temp_max_menu">Temp max : %1$.2f °C</string>
 
-    <string name="cloud_all_menu">Cloud all : %1$.2f</string>
-    <string name="pressure_menu">Pressure : %1$.2f</string>
-    <string name="humidity_menu">Humidity : %1$.2f</string>
+    <string name="cloud_all_menu">Cloud all : %1$d</string>
+    <string name="pressure_menu">Pressure : %1$d Pa</string>
+    <string name="humidity_menu">Humidity : %1$d</string>
 
-    <string name="speed">Speed : %1$.2f</string>
+    <string name="speed">Speed : %1$.2f km/h</string>
     <string name="deg">Deg : %1$.2f</string>
 </resources>

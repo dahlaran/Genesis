@@ -23,13 +23,12 @@
 
         <TextView
             android:id="@+id/current_weather_now"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/base_margin"
             android:layout_marginEnd="@dimen/base_margin"
             android:text="Now"
             android:textSize="@dimen/big_textSize"
-            app:layout_constraintEnd_toStartOf="@id/current_weather_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,9 +37,11 @@
             style="@style/current_weather_default_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin"
+            app:layout_constraintBottom_toBottomOf="@id/current_weather_now"
             app:layout_constraintEnd_toStartOf="@id/current_weather_image"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/current_weather_now"
+            app:layout_constraintStart_toEndOf="@id/current_weather_now"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="10h" />
 
         <TextView
@@ -56,15 +57,47 @@
             app:layout_constraintTop_toBottomOf="@id/current_weather_hour"
             tools:text="Cloudy" />
 
-        <TextView
-            android:id="@+id/current_weather_temperature"
-            style="@style/current_weather_default_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_wi_celsius"
-            android:gravity="center_vertical"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/base_margin"
+            android:layout_marginEnd="@dimen/base_margin"
+            app:layout_constraintBottom_toBottomOf="@id/current_weather_image"
+            app:layout_constraintEnd_toStartOf="@id/current_weather_image"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/current_weather_description"
-            tools:text="10" />
+            app:layout_constraintTop_toBottomOf="@id/current_weather_description">
+
+            <ImageView
+                android:id="@+id/current_weather_temperature_image"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_wi_thermometer"
+                app:layout_constraintEnd_toStartOf="@+id/current_weather_cloud_image"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/current_weather_cloud_image"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/base_margin"
+                android:layout_marginEnd="@dimen/base_margin"
+                android:src="@drawable/ic_wi_cloud"
+                app:layout_constraintEnd_toStartOf="@+id/current_weather_wind_image"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/current_weather_temperature_image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/current_weather_wind_image"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_wi_sandstorm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/current_weather_cloud_image"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

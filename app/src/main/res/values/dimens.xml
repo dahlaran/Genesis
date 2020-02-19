@@ -13,6 +13,6 @@
     <dimen name="title_textSize">24sp</dimen>
 
     <!--  Layout dimension  -->
-    <dimen name="current_weather_image_width">90dp</dimen>
-    <dimen name="current_weather_image_height">90dp</dimen>
+    <dimen name="current_weather_image_width">120dp</dimen>
+    <dimen name="current_weather_image_height">120dp</dimen>
 </resources>
