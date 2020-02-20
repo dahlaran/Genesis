@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.dahlaran.genesis.R
-import com.dahlaran.genesis.models.OpenWeatherApiWeather
 import com.dahlaran.genesis.utilis.LocationUtilis
 import com.dahlaran.genesis.viewmodels.WeatherViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -40,6 +39,13 @@ class MainActivity : BaseActivity() {
         weatherSwipeRefresh.setOnRefreshListener {
             getWeather()
         }
+
+        weatherViewModel.weatherData.observe(this,
+            Observer { weather ->
+                Log.d("MainActivity", "weatherObserver  = $weather")
+                current_weather_layout.setNewValue(weather)
+                weatherSwipeRefresh.isRefreshing = false
+            })
     }
 
     override fun onDestroy() {
@@ -48,11 +54,6 @@ class MainActivity : BaseActivity() {
     }
 
     private fun getWeather() {
-        weatherViewModel.getWeatherUsingCoordinate(currentLocation).observe(this,
-            Observer { weather ->
-                Log.d("MainActivity", "weatherObserver  = $weather")
-                current_weather_layout.setNewValue(weather)
-                weatherSwipeRefresh.isRefreshing = false
-            })
+        weatherViewModel.getWeatherUsingCoordinate(currentLocation)
     }
 }
