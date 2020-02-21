@@ -4,5 +4,5 @@ With differents notions like:
 - LiveData
 - Retrofit
 - Location of the device, using Network (TODO: add GPS)
-- Room (TODO)
+- Room
 - Widget (TODO)
