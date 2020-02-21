@@ -3,20 +3,31 @@ package com.dahlaran.genesis.data
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.dahlaran.genesis.data.database.OpenWeatherApiWeatherDatabase
 import com.dahlaran.genesis.data.network.OpenWeatherApiManager
 import com.dahlaran.genesis.models.OpenWeatherApiWeather
+import com.dahlaran.genesis.view.GenesisApplication
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 object OpenWeatherRepository {
-
-    // TODO: Save inside a room database (offline)
-
-    private val openWeatherApiWeather: OpenWeatherApiManager = OpenWeatherApiManager()
+    // LiveData who contain weather
     private val weatherLiveData = MutableLiveData<OpenWeatherApiWeather?>()
+
+    // Room
+    private val openWeatherApiWeatherDao = OpenWeatherApiWeatherDatabase.getInstance(GenesisApplication.instance.applicationContext).openWeatherApiWeatherDao()
+
+    // Network
+    private val openWeatherApiWeather: OpenWeatherApiManager = OpenWeatherApiManager()
     private lateinit var weatherDisposable: Disposable
 
     fun initialiseWeatherValue(latitude: Int, longitude: Int): LiveData<OpenWeatherApiWeather?> {
+        // Get weather stored inside database
+        getWeatherFromDatabase()
         // Remove dispose if it has been already initialise
         removeDispose()
         weatherDisposable = openWeatherApiWeather.streamFetchUserFollowing(latitude, longitude).subscribeWith(object : DisposableObserver<OpenWeatherApiWeather>() {
@@ -26,6 +37,7 @@ object OpenWeatherRepository {
 
             override fun onNext(t: OpenWeatherApiWeather) {
                 Log.d(javaClass.name, "InitialiseWeatherValue: $t")
+                insert(t)
                 updateWeatherLiveData(t)
             }
 
@@ -35,6 +47,26 @@ object OpenWeatherRepository {
         })
 
         return weatherLiveData
+    }
+
+    fun getWeatherFromDatabase(): LiveData<OpenWeatherApiWeather?> {
+        val coroutineScope = CoroutineScope(Dispatchers.Default + Job())
+
+        coroutineScope.launch {
+            val weather = openWeatherApiWeatherDao.getWeather()
+            if (weather != null) {
+                updateWeatherLiveData(weather)
+            }
+        }
+        return weatherLiveData
+    }
+
+    fun insert(weather: OpenWeatherApiWeather) {
+        val coroutineScope = CoroutineScope(Dispatchers.Default + Job())
+
+        coroutineScope.launch {
+            openWeatherApiWeatherDao.insert(weather)
+        }
     }
 
     fun removeDispose() {
@@ -47,7 +79,7 @@ object OpenWeatherRepository {
         }
     }
 
-    fun getInstanceOfLiveData() : LiveData<OpenWeatherApiWeather?> {
+    fun getInstanceOfLiveData(): LiveData<OpenWeatherApiWeather?> {
         return weatherLiveData
     }
 }
