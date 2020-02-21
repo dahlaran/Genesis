@@ -8,8 +8,8 @@ class TemperatureUtilis {
             return temp - 273.15
         }
 
-        fun convertKelvinTofahrenheit(temp: Double): Double {
-            return temp - 459.67
+        fun convertKelvinToFahrenheit(temp: Double): Double {
+            return ((temp - 273.15) * 9 / 5 + 32)
         }
     }
 }
