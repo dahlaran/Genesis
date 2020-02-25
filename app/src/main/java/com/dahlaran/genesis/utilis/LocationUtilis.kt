@@ -103,13 +103,23 @@ object LocationUtilis : LocationListener {
         GenesisApplication.instance.startLocationSourceSettingsActivity()
     }
 
-    fun requestCurrentPosition(provider: String?): Boolean {
+    fun requestCurrentPosition(context: Context): Boolean {
+        if (::locationManager.isInitialized) {
+            locationManager.removeUpdates(oneShotRequestPosition)
+        }
+        checkProviderStatus(context)
+
+        // If it don't have been initialized, don't go any further a problem occurred
+        if (!::locationManager.isInitialized) {
+            return false
+        }
+
         try {
-            provider?.let {
+            locationProvider?.let {
                 locationManager.removeUpdates(oneShotRequestPosition)
-                locationManager.requestLocationUpdates(provider, 1, 0f, oneShotRequestPosition)
+                locationManager.requestLocationUpdates(it, 1, 0f, oneShotRequestPosition)
                 return true
-            }.run {
+            } ?: run {
                 return false
             }
         } catch (exception: SecurityException) {

@@ -10,22 +10,23 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/base_margin">
+        android:layout_marginStart="@dimen/base_margin"
+        android:layout_marginEnd="@dimen/base_margin">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/current_weather_image"
-            android:layout_width="@dimen/current_weather_image_width"
-            android:layout_height="@dimen/current_weather_image_height"
+        <ImageView
+            android:id="@+id/currentWeatherImage"
+            android:layout_width="@dimen/currentWeatherImage_width"
+            android:layout_height="@dimen/currentWeatherImage_height"
             android:layout_margin="@dimen/base_margin"
             android:src="@drawable/ic_no_media"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/current_weather_now"
+            android:id="@+id/currentWeatherNow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/base_margin"
+            android:layout_marginTop="@dimen/very_small_margin"
             android:layout_marginEnd="@dimen/base_margin"
             android:text="Now"
             android:textSize="@dimen/big_textSize"
@@ -33,70 +34,71 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/current_weather_hour"
-            style="@style/current_weather_default_text"
+            android:id="@+id/currentWeatherHour"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/base_margin"
-            app:layout_constraintBottom_toBottomOf="@id/current_weather_now"
-            app:layout_constraintEnd_toStartOf="@id/current_weather_image"
-            app:layout_constraintStart_toEndOf="@id/current_weather_now"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="@dimen/base_margin"
+            android:textSize="@dimen/big_textSize"
+            app:layout_constraintBottom_toBottomOf="@id/currentWeatherNow"
+            app:layout_constraintEnd_toStartOf="@id/currentWeatherImage"
+            app:layout_constraintStart_toEndOf="@id/currentWeatherNow"
+            app:layout_constraintTop_toTopOf="@id/currentWeatherNow"
             tools:text="10h" />
 
         <TextView
-            android:id="@+id/current_weather_description"
+            android:id="@+id/currentWeatherDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/base_margin"
             android:layout_marginEnd="@dimen/base_margin"
             android:textSize="@dimen/very_big_textSize"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/current_weather_image"
+            app:layout_constraintEnd_toStartOf="@id/currentWeatherImage"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/current_weather_hour"
+            app:layout_constraintTop_toBottomOf="@id/currentWeatherHour"
             tools:text="Cloudy" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/base_margin"
+            android:layout_marginTop="@dimen/small_margin"
             android:layout_marginEnd="@dimen/base_margin"
-            app:layout_constraintBottom_toBottomOf="@id/current_weather_image"
-            app:layout_constraintEnd_toStartOf="@id/current_weather_image"
+            app:layout_constraintBottom_toBottomOf="@id/currentWeatherImage"
+            app:layout_constraintEnd_toStartOf="@id/currentWeatherImage"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/current_weather_description">
+            app:layout_constraintTop_toBottomOf="@id/currentWeatherDescription">
 
             <ImageView
-                android:id="@+id/current_weather_temperature_image"
+                android:id="@+id/currentWeatherTemperatureImage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_wi_thermometer"
-                app:layout_constraintEnd_toStartOf="@+id/current_weather_cloud_image"
+                app:layout_constraintEnd_toStartOf="@+id/currentWeatherCloudImage"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/current_weather_cloud_image"
+                android:id="@+id/currentWeatherCloudImage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/base_margin"
                 android:layout_marginEnd="@dimen/base_margin"
                 android:src="@drawable/ic_wi_cloud"
-                app:layout_constraintEnd_toStartOf="@+id/current_weather_wind_image"
+                app:layout_constraintEnd_toStartOf="@id/currentWeatherWindImage"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/current_weather_temperature_image"
+                app:layout_constraintStart_toEndOf="@id/currentWeatherTemperatureImage"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/current_weather_wind_image"
+                android:id="@+id/currentWeatherWindImage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_wi_sandstorm"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/current_weather_cloud_image"
+                app:layout_constraintStart_toEndOf="@id/currentWeatherCloudImage"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

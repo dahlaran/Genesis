@@ -54,9 +54,7 @@ object OpenWeatherRepository {
 
         coroutineScope.launch {
             val weather = openWeatherApiWeatherDao.getWeather()
-            if (weather != null) {
-                updateWeatherLiveData(weather)
-            }
+            updateWeatherLiveData(weather)
         }
         return weatherLiveData
     }
@@ -69,14 +67,12 @@ object OpenWeatherRepository {
         }
     }
 
-    fun removeDispose() {
+    private fun removeDispose() {
         if (this::weatherDisposable.isInitialized && !this.weatherDisposable.isDisposed) this.weatherDisposable.dispose()
     }
 
-    fun updateWeatherLiveData(weather: OpenWeatherApiWeather) {
-        if (weatherLiveData.value != weather) {
-            weatherLiveData.postValue(weather)
-        }
+    fun updateWeatherLiveData(weather: OpenWeatherApiWeather?) {
+        weatherLiveData.postValue(weather)
     }
 
     fun getInstanceOfLiveData(): LiveData<OpenWeatherApiWeather?> {

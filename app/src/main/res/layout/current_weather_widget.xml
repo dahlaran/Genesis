@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:maxHeight="@dimen/current_weather_max_height">
+
+<!--
+    <ImageView
+        android:id="@+id/currentWeatherImage"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:adjustViewBounds="true"
+        android:maxWidth="60dp"
+        android:src="@drawable/ic_no_media" />
+
+    <TextView
+        android:id="@+id/currentWeatherNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="@dimen/base_margin"
+        android:text="Now"
+        android:textSize="@dimen/big_textSize" />
+
+    <TextView
+        android:id="@+id/currentWeatherHour"
+        style="@style/current_weather_default_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/currentWeatherNow"
+        android:layout_alignBottom="@id/currentWeatherNow"
+        android:layout_marginStart="@dimen/base_margin"
+        android:layout_toEndOf="@id/currentWeatherNow"
+        android:gravity="center_vertical"
+        android:textIsSelectable="true"
+        tools:text="10h" />
+
+    <ImageButton
+        android:id="@+id/currentWeatherRefreshImage"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignTop="@id/currentWeatherNow"
+        android:layout_alignBottom="@id/currentWeatherNow"
+        android:layout_toEndOf="@id/currentWeatherHour"
+        android:src="@drawable/ic_wi_cloud_refresh" />
+
+    <TextView
+        android:id="@+id/currentWeatherDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/currentWeatherNow"
+        android:layout_marginTop="@dimen/very_small_margin"
+        android:layout_marginEnd="@dimen/base_margin"
+        android:text="Cloudy"
+        android:textIsSelectable="true"
+        android:textSize="@dimen/very_big_textSize"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_below="@id/currentWeatherDescription"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/base_margin"
+        android:layout_toStartOf="@id/currentWeatherImage"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/currentWeatherTemperatureImage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_wi_thermometer" />
+
+        <ImageView
+            android:id="@+id/currentWeatherCloudImage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_wi_cloud" />
+
+        <ImageView
+            android:id="@+id/currentWeatherWindImage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_wi_sandstorm" />
+    </LinearLayout>
+-->
+</RelativeLayout>

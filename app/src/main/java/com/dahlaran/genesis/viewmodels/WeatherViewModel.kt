@@ -14,7 +14,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
     fun getWeatherUsingCoordinate(location: Location?): LiveData<OpenWeatherApiWeather?> {
         location?.let {
             OpenWeatherRepository.initialiseWeatherValue(it.latitude.toInt(), it.longitude.toInt())
-        }.run {
+        } ?: run {
             OpenWeatherRepository.getWeatherFromDatabase()
         }
         return weatherData

@@ -14,12 +14,11 @@
 
     <!-- Current Weather Layout -->
     <style name="current_weather_default_text">
-        <item name="android:layout_marginTop">@dimen/base_margin</item>
         <item name="android:layout_marginEnd">@dimen/base_margin</item>
         <item name="android:textSize">@dimen/base_textSize</item>
     </style>
 
-    <style name="current_weather_description_text">
+    <style name="currentWeatherDescription_text">
         <item name="android:textSize">@dimen/very_big_textSize</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginTop">@dimen/base_margin</item>
