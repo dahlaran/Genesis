@@ -49,7 +49,6 @@ class SimpleDatabaseTest {
         db.close()
     }
 
-
     @Test
     @Throws(Exception::class)
     fun writeWeatherAndReadInList() = testScope.runBlockingTest {
@@ -62,7 +61,7 @@ class SimpleDatabaseTest {
             Main(0.1, 0.2, 0.3, 0.4, 5, 6),
             Wind(0.1, 0.2), Clouds(1), 10,
             Sys(1, 2, 3.3, "country", 5, 6),
-            1800, 2, "name", 42
+            1800, 2, "name", 42, System.currentTimeMillis()
         )
         var weatherRetried: OpenWeatherApiWeather? = null
         val coroutineScope = CoroutineScope(Dispatchers.Default + Job())

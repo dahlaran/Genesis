@@ -8,6 +8,7 @@ import com.dahlaran.genesis.R
 import com.dahlaran.genesis.models.OpenWeatherApiWeather
 import com.dahlaran.genesis.utilis.ImageUtilis
 import com.dahlaran.genesis.utilis.TemperatureUtilis.Companion.convertKelvinToCelcius
+import com.dahlaran.genesis.utilis.TimeUtilis
 import com.dahlaran.genesis.utilis.WeatherUtilis
 import kotlinx.android.synthetic.main.current_weather_layout.view.*
 
@@ -22,7 +23,7 @@ class CurrentWeatherLayout : CardView {
         inflate(context, R.layout.current_weather_layout, this)
         hideViews()
         // TODO: add thermometer with colors and size change depending of the temperature
-        current_weather_temperature_image.setOnCreateContextMenuListener { menu, v, menuInfo ->
+        currentWeatherTemperatureImage.setOnCreateContextMenuListener { menu, v, menuInfo ->
             weather?.main?.let {
                 menu.add(context.getString(R.string.temperature_menu, convertKelvinToCelcius(it.temp)))
                 menu.add(context.getString(R.string.feels_like_menu, convertKelvinToCelcius(it.feels_like)))
@@ -31,7 +32,7 @@ class CurrentWeatherLayout : CardView {
             }
         }
 
-        current_weather_cloud_image.setOnCreateContextMenuListener { menu, v, menuInfo ->
+        currentWeatherCloudImage.setOnCreateContextMenuListener { menu, v, menuInfo ->
             weather?.let {
                 menu.add(context.getString(R.string.cloud_all_menu, it.clouds.all))
                 menu.add(context.getString(R.string.pressure_menu, it.main.pressure))
@@ -40,7 +41,7 @@ class CurrentWeatherLayout : CardView {
         }
 
         // TODO: add(inside menu)/change(icon) orientation of wind depending of the wind orientation (wind.deg)
-        current_weather_wind_image.setOnCreateContextMenuListener { menu, v, menuInfo ->
+        currentWeatherWindImage.setOnCreateContextMenuListener { menu, v, menuInfo ->
             weather?.let {
                 menu.add(context.getString(R.string.speed, WeatherUtilis.ktsToKmH(it.wind.speed)))
                 menu.add(context.getString(R.string.deg, it.wind.deg))
@@ -55,18 +56,18 @@ class CurrentWeatherLayout : CardView {
 
     private fun updateView() {
         weather?.let {
-            current_weather_description.visibility = View.VISIBLE
-            current_weather_hour.visibility = View.VISIBLE
+            currentWeatherTime.visibility = View.VISIBLE
 
-            // TODO: change time zone to be the time when the call is received
-            current_weather_hour.text = it.timezone.toString()
+            currentWeatherTime.text = TimeUtilis.getVisualFromLong(it.timeOfCall)
             if (it.weather.isNotEmpty()) {
+                currentWeatherDescription.visibility = View.VISIBLE
+
                 // There is a list of weather but I don't know why ?
-                ImageUtilis.setImageToImageView(current_weather_image, it.weather[0].icon)
-                current_weather_description.text = Character.toUpperCase(it.weather[0].description[0]) + it.weather[0].description.substring(1)
+                ImageUtilis.setImageToImageView(currentWeatherImage, it.weather[0].icon)
+                currentWeatherDescription.text = Character.toUpperCase(it.weather[0].description[0]) + it.weather[0].description.substring(1)
             } else {
-                ImageUtilis.setImageToImageView(current_weather_image, null)
-                current_weather_description.visibility = View.GONE
+                ImageUtilis.setImageToImageView(currentWeatherImage, null)
+                currentWeatherDescription.visibility = View.GONE
             }
         } ?: run {
             hideViews()
@@ -74,8 +75,8 @@ class CurrentWeatherLayout : CardView {
     }
 
     private fun hideViews() {
-        ImageUtilis.setImageToImageView(current_weather_image, null)
-        current_weather_description.visibility = View.GONE
-        current_weather_hour.visibility = View.GONE
+        ImageUtilis.setImageToImageView(currentWeatherImage, null)
+        currentWeatherDescription.visibility = View.GONE
+        currentWeatherTime.visibility = View.GONE
     }
 }
