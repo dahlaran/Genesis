@@ -24,7 +24,6 @@ class WeatherWidgetProvider : AppWidgetProvider() {
         context?.let {
             WeatherWidgetProviderModel.getInstance(it)
         }
-
     }
 
     override fun onDisabled(context: Context?) {
@@ -36,7 +35,6 @@ class WeatherWidgetProvider : AppWidgetProvider() {
 
     override fun onReceive(context: Context?, intent: Intent) {
         val action = intent.action
-        Toast.makeText(context, "onReceive "+action, Toast.LENGTH_SHORT).show()
 
         if (action == ACTION_UPDATE_DATA && context != null) {
             val appWidgetManager = AppWidgetManager.getInstance(context)
@@ -53,6 +51,8 @@ class WeatherWidgetProvider : AppWidgetProvider() {
                 Toast.makeText(context, "Request Location Failed", Toast.LENGTH_SHORT).show()
             }
 
+            WeatherWidgetProviderModel.getInstance(context).singleObserverToPresenterWeatherLiveData(context)
+            //WeatherWidgetProviderModel.getInstance(context).presenter
             // Call presenter to get new weather even if the location didn't change
             WeatherWidgetProviderModel.getInstance(context).presenter.getWeatherUsingCoordinate(LocationUtilis.location.value)
         } else super.onReceive(context, intent)
@@ -67,7 +67,7 @@ class WeatherWidgetProvider : AppWidgetProvider() {
             appWidgetIds?.forEach { id ->
                 val remoteViews = RemoteViews(context.packageName, R.layout.widget_weather)
 
-                updateWidget(context, remoteViews, appWidgetManager, id, WeatherWidgetProviderModel.getInstance(context).weatherLiveData.value)
+                updateWidget(context, remoteViews, appWidgetManager, id, WeatherWidgetProviderModel.getInstance(context).weatherLiveData?.value)
             }
         }
     }
@@ -76,7 +76,8 @@ class WeatherWidgetProvider : AppWidgetProvider() {
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
         if (context != null && appWidgetManager != null) {
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_weather)
-            updateWidget(context, remoteViews, appWidgetManager, appWidgetId, WeatherWidgetProviderModel.getInstance(context).weatherLiveData.value)
+
+            updateWidget(context, remoteViews, appWidgetManager, appWidgetId, WeatherWidgetProviderModel.getInstance(context).weatherLiveData?.value)
         }
     }
 }

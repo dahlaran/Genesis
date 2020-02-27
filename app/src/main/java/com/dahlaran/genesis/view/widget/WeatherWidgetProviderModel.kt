@@ -7,6 +7,7 @@ import android.location.Location
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.dahlaran.genesis.BuildConfig
 import com.dahlaran.genesis.models.OpenWeatherApiWeather
 import com.dahlaran.genesis.presenters.WidgetPresenter
 import com.dahlaran.genesis.presenters.WidgetPresenterInterface
@@ -30,10 +31,12 @@ class WeatherWidgetProviderModel {
         }
     }
 
+    var weatherLiveData: LiveData<OpenWeatherApiWeather?>? = null
     lateinit var presenter: WidgetPresenterInterface
-    lateinit var weatherLiveData: LiveData<OpenWeatherApiWeather?>
-    lateinit var weatherLiveDataObserver: Observer<OpenWeatherApiWeather?>
-    lateinit var locationObserver: Observer<Location?>
+
+    private lateinit var locationObserver: Observer<Location?>
+    // Single observer
+    private lateinit var weatherLiveDataObserver: Observer<OpenWeatherApiWeather?>
 
     // Initialize LiveData and Observable
     private fun initializeLiveData(context: Context) {
@@ -44,6 +47,9 @@ class WeatherWidgetProviderModel {
         if (!::weatherLiveDataObserver.isInitialized) {
             weatherLiveDataObserver = Observer {
 
+                if (BuildConfig.DEBUG) {
+                    Log.d(javaClass.simpleName, "Weather observer updated")
+                }
                 // Create intent and broadcast to notify widgets when data changes
                 val updateIntent = Intent(context, WeatherWidgetProvider::class.java)
                 updateIntent.action = WeatherWidgetProvider.ACTION_UPDATE_DATA
@@ -53,46 +59,60 @@ class WeatherWidgetProviderModel {
 
                 // Send broadcast to update all widgets
                 pendingIntent.send()
+
+                // Remove observer
+                removeWeatherDataObserver()
             }
-        }
-        if (!::weatherLiveData.isInitialized) {
-            weatherLiveData = presenter.getLiveData()
         }
 
         if (!::locationObserver.isInitialized) {
             locationObserver = Observer { location ->
-                Log.d("WeatherWidgetProvider", "location = " + location)
-
-                if (::presenter.isInitialized) {
-                    Log.d("WeatherWidgetProvider", "presenter.isInitialized")
-                    presenter.getWeatherUsingCoordinate(location)
-                } else {
-                    Log.d("WeatherWidgetProvider", "presenter.notInithialized")
+                if (BuildConfig.DEBUG) {
+                    Log.d(javaClass.simpleName, "Observe location = $location")
                 }
+                if (!::presenter.isInitialized) {
+                    presenter = WidgetPresenter()
+                }
+                singleObserverToPresenterWeatherLiveData(context)
+                presenter.getWeatherUsingCoordinate(location)
             }
         }
 
-        LocationUtilis.location.observeForever {
-            locationObserver
+        LocationUtilis.location.observeForever(locationObserver)
+    }
+
+    fun singleObserverToPresenterWeatherLiveData(context: Context) {
+        if (BuildConfig.DEBUG) {
+            Log.d(javaClass.simpleName, "singleObserverToPresenterWeatherLiveData")
         }
 
-        // Observe data to be notify when the data change
-        weatherLiveData.observeForever {
-            weatherLiveDataObserver
+        if (!::weatherLiveDataObserver.isInitialized) {
+            initializeLiveData(context)
         }
+
+        removeWeatherDataObserver()
+        weatherLiveData = presenter.getLiveData()
+
+        weatherLiveData?.observeForever(weatherLiveDataObserver)
     }
 
     fun removeLiveDataObserver() {
-        if (::weatherLiveDataObserver.isInitialized) {
-            weatherLiveData.removeObserver {
-                weatherLiveDataObserver
-            }
+        if (BuildConfig.DEBUG) {
+            Log.d(javaClass.simpleName, "removeLiveDataObserver")
         }
+        removeWeatherDataObserver()
         if (::locationObserver.isInitialized) {
-            LocationUtilis.location.removeObserver {
-                locationObserver
-            }
+            LocationUtilis.location.removeObserver(locationObserver)
         }
         instance = null
+    }
+
+    private fun removeWeatherDataObserver() {
+        if (BuildConfig.DEBUG) {
+            Log.d(javaClass.simpleName, "removeWeatherDataObserver")
+        }
+        if (::weatherLiveDataObserver.isInitialized) {
+            weatherLiveData?.removeObserver(weatherLiveDataObserver)
+        }
     }
 }

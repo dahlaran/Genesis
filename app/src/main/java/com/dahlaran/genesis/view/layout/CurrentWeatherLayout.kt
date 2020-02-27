@@ -8,6 +8,7 @@ import com.dahlaran.genesis.R
 import com.dahlaran.genesis.models.OpenWeatherApiWeather
 import com.dahlaran.genesis.utilis.ImageUtilis
 import com.dahlaran.genesis.utilis.TemperatureUtilis.Companion.convertKelvinToCelcius
+import com.dahlaran.genesis.utilis.TimeUtilis
 import com.dahlaran.genesis.utilis.WeatherUtilis
 import kotlinx.android.synthetic.main.current_weather_layout.view.*
 
@@ -55,10 +56,9 @@ class CurrentWeatherLayout : CardView {
 
     private fun updateView() {
         weather?.let {
-            currentWeatherHour.visibility = View.VISIBLE
+            currentWeatherTime.visibility = View.VISIBLE
 
-            // TODO: change time zone to be the time when the call is received
-            currentWeatherHour.text = it.timezone.toString()
+            currentWeatherTime.text = TimeUtilis.getVisualFromLong(it.timeOfCall)
             if (it.weather.isNotEmpty()) {
                 currentWeatherDescription.visibility = View.VISIBLE
 
@@ -77,6 +77,6 @@ class CurrentWeatherLayout : CardView {
     private fun hideViews() {
         ImageUtilis.setImageToImageView(currentWeatherImage, null)
         currentWeatherDescription.visibility = View.GONE
-        currentWeatherHour.visibility = View.GONE
+        currentWeatherTime.visibility = View.GONE
     }
 }

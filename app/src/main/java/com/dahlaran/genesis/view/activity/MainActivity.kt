@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.dahlaran.genesis.BuildConfig
 import com.dahlaran.genesis.R
 import com.dahlaran.genesis.utilis.LocationUtilis
 import com.dahlaran.genesis.viewmodels.WeatherViewModel
@@ -42,7 +43,9 @@ class MainActivity : BaseActivity() {
 
         weatherViewModel.weatherData.observe(this,
             Observer { weather ->
-                Log.d("MainActivity", "weatherObserver  = $weather")
+                if (BuildConfig.DEBUG) {
+                    Log.d(javaClass.simpleName, "weatherObserver  = $weather")
+                }
                 current_weather_layout.setNewValue(weather)
                 weatherSwipeRefresh.isRefreshing = false
             })

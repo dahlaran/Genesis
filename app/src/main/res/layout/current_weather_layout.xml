@@ -15,36 +15,23 @@
 
         <ImageView
             android:id="@+id/currentWeatherImage"
-            android:layout_width="@dimen/currentWeatherImage_width"
-            android:layout_height="@dimen/currentWeatherImage_height"
+            android:layout_width="@dimen/current_weather_image_width"
+            android:layout_height="@dimen/current_weather_image_height"
             android:layout_margin="@dimen/base_margin"
             android:src="@drawable/ic_no_media"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/currentWeatherNow"
+            android:id="@+id/currentWeatherTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/very_small_margin"
             android:layout_marginEnd="@dimen/base_margin"
-            android:text="Now"
+            android:text="No Time"
             android:textSize="@dimen/big_textSize"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/currentWeatherHour"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/base_margin"
-            android:layout_marginEnd="@dimen/base_margin"
-            android:textSize="@dimen/big_textSize"
-            app:layout_constraintBottom_toBottomOf="@id/currentWeatherNow"
-            app:layout_constraintEnd_toStartOf="@id/currentWeatherImage"
-            app:layout_constraintStart_toEndOf="@id/currentWeatherNow"
-            app:layout_constraintTop_toTopOf="@id/currentWeatherNow"
-            tools:text="10h" />
 
         <TextView
             android:id="@+id/currentWeatherDescription"
@@ -56,7 +43,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/currentWeatherImage"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/currentWeatherHour"
+            app:layout_constraintTop_toBottomOf="@id/currentWeatherTime"
             tools:text="Cloudy" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

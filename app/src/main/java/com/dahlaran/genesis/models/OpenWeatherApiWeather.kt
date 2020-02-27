@@ -18,5 +18,7 @@ data class OpenWeatherApiWeather(
     @PrimaryKey
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String,
-    @SerializedName("cod") val cod: Int
+    @SerializedName("cod") val cod: Int,
+    // Custom param
+    @SerializedName("timeOfCall") var timeOfCall: Long
 )

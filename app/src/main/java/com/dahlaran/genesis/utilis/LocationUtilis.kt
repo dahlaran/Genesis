@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.dahlaran.genesis.BuildConfig
 import com.dahlaran.genesis.view.GenesisApplication
 
 
@@ -25,11 +26,15 @@ object LocationUtilis : LocationListener {
         }
 
         override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-            Log.d("LocationUtilis", "onStatusChanged")
+            if (BuildConfig.DEBUG) {
+                Log.d(javaClass.simpleName, "onStatusChanged")
+            }
         }
 
         override fun onProviderEnabled(provider: String?) {
-            Log.d("LocationUtilis", "onProviderEnabled")
+            if (BuildConfig.DEBUG) {
+                Log.d(javaClass.simpleName, "onProviderEnabled")
+            }
         }
 
         override fun onProviderDisabled(provider: String?) {
@@ -92,11 +97,15 @@ object LocationUtilis : LocationListener {
     }
 
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-        Log.d("LocationUtilis", "onStatusChanged")
+        if (BuildConfig.DEBUG) {
+            Log.d(javaClass.simpleName, "onStatusChanged")
+        }
     }
 
     override fun onProviderEnabled(provider: String?) {
-        Log.d("LocationUtilis", "onProviderEnabled")
+        if (BuildConfig.DEBUG) {
+            Log.d(javaClass.simpleName, "onProviderEnabled")
+        }
     }
 
     override fun onProviderDisabled(provider: String?) {
@@ -128,7 +137,9 @@ object LocationUtilis : LocationListener {
     }
 
     fun locationChanged(newLocation: Location?) {
+        if (BuildConfig.DEBUG) {
+            Log.d(javaClass.simpleName, "Latitude = " + newLocation?.latitude + "  longitude = " + newLocation?.longitude)
+        }
         this.location.postValue(newLocation)
-        Log.d("LocationUtilis", "Latitude = " + newLocation?.latitude + "  longitude = " + newLocation?.longitude)
     }
 }

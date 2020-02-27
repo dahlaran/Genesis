@@ -3,6 +3,7 @@ package com.dahlaran.genesis.data
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.dahlaran.genesis.BuildConfig
 import com.dahlaran.genesis.data.database.OpenWeatherApiWeatherDatabase
 import com.dahlaran.genesis.data.network.OpenWeatherApiManager
 import com.dahlaran.genesis.models.OpenWeatherApiWeather
@@ -32,17 +33,22 @@ object OpenWeatherRepository {
         removeDispose()
         weatherDisposable = openWeatherApiWeather.streamFetchUserFollowing(latitude, longitude).subscribeWith(object : DisposableObserver<OpenWeatherApiWeather>() {
             override fun onComplete() {
-                Log.d(javaClass.name, "InitialiseWeatherValue: onComplete")
+                if (BuildConfig.DEBUG) {
+                    Log.d(javaClass.simpleName, "onComplete")
+                }
             }
 
             override fun onNext(t: OpenWeatherApiWeather) {
-                Log.d(javaClass.name, "InitialiseWeatherValue: $t")
+                if (BuildConfig.DEBUG) {
+                    Log.d(javaClass.simpleName, "OnNext")
+                }
+                t.timeOfCall = System.currentTimeMillis()
                 insert(t)
                 updateWeatherLiveData(t)
             }
 
             override fun onError(e: Throwable) {
-                Log.e(javaClass.name, "InitialiseWeatherValue: error occurred : " + e.message)
+                Log.e(javaClass.simpleName, "Error occurred : " + e.message)
             }
         })
 
@@ -72,7 +78,27 @@ object OpenWeatherRepository {
     }
 
     fun updateWeatherLiveData(weather: OpenWeatherApiWeather?) {
-        weatherLiveData.postValue(weather)
+        if (weather == null && weatherLiveData.value == null) {
+            weatherLiveData.postValue(weather)
+            if (BuildConfig.DEBUG) {
+                Log.d(javaClass.simpleName, "Weather updated")
+            }
+        } else if (weather != null) {
+            if (weatherLiveData.value == null || weather.timeOfCall > weatherLiveData.value!!.timeOfCall) {
+                weatherLiveData.postValue(weather)
+                if (BuildConfig.DEBUG) {
+                    Log.d(javaClass.simpleName, "Weather updated")
+                }
+            } else {
+                if (BuildConfig.DEBUG) {
+                    Log.d(javaClass.simpleName, "Weather not updated")
+                }
+            }
+        } else {
+            if (BuildConfig.DEBUG) {
+                Log.d(javaClass.simpleName, "Weather not updated")
+            }
+        }
     }
 
     fun getInstanceOfLiveData(): LiveData<OpenWeatherApiWeather?> {

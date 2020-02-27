@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widgetWeatherMain"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -16,41 +15,29 @@
         android:src="@drawable/ic_no_media" />
 
     <TextView
-        android:id="@+id/widgetWeatherNow"
+        android:id="@+id/widgetWeatherTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginEnd="@dimen/base_margin"
-        android:text="Now"
-        android:textSize="@dimen/big_textSize" />
-
-    <TextView
-        android:id="@+id/widgetWeatherHour"
-        style="@style/current_weather_default_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/widgetWeatherNow"
-        android:layout_alignBottom="@id/widgetWeatherNow"
-        android:layout_marginStart="@dimen/base_margin"
-        android:layout_toEndOf="@id/widgetWeatherNow"
-        android:gravity="center_vertical"
+        android:text="No Time"
         android:textIsSelectable="true"
-        tools:text="10h" />
+        android:textSize="@dimen/big_textSize" />
 
     <ImageView
         android:id="@+id/widgetWeatherRefreshImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/widgetWeatherNow"
-        android:layout_alignBottom="@id/widgetWeatherNow"
-        android:layout_toEndOf="@id/widgetWeatherHour"
+        android:layout_alignTop="@id/widgetWeatherTime"
+        android:layout_alignBottom="@id/widgetWeatherTime"
+        android:layout_toEndOf="@id/widgetWeatherTime"
         android:src="@drawable/ic_wi_cloud_refresh" />
 
     <TextView
         android:id="@+id/widgetWeatherDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/widgetWeatherNow"
+        android:layout_below="@id/widgetWeatherTime"
         android:layout_marginTop="@dimen/very_small_margin"
         android:layout_marginEnd="@dimen/base_margin"
         android:text="Cloudy"

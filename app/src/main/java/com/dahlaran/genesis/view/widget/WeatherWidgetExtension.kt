@@ -9,6 +9,7 @@ import android.widget.RemoteViews
 import com.dahlaran.genesis.R
 import com.dahlaran.genesis.models.OpenWeatherApiWeather
 import com.dahlaran.genesis.utilis.ImageUtilis
+import com.dahlaran.genesis.utilis.TimeUtilis
 import com.dahlaran.genesis.view.activity.MainActivity
 
 /**
@@ -39,10 +40,9 @@ internal fun WeatherWidgetProvider.updateWidget(context: Context, view: RemoteVi
 
 
     weather?.let {
-        view.setViewVisibility(R.id.widgetWeatherHour, View.VISIBLE)
+        view.setViewVisibility(R.id.widgetWeatherTime, View.VISIBLE)
 
-        // TODO: change time zone to be the time when the call is received
-        view.setTextViewText(R.id.widgetWeatherHour, it.timezone.toString())
+        view.setTextViewText(R.id.widgetWeatherTime, TimeUtilis.getVisualFromLong(it.timeOfCall))
         if (it.weather.isNotEmpty()) {
 
             view.setViewVisibility(R.id.widgetWeatherDescription, View.VISIBLE)
@@ -56,7 +56,7 @@ internal fun WeatherWidgetProvider.updateWidget(context: Context, view: RemoteVi
     } ?: run {
         view.setImageViewResource(R.id.widgetWeatherImage, ImageUtilis.getImageByString(null).idRes)
         view.setViewVisibility(R.id.widgetWeatherDescription, View.GONE)
-        view.setViewVisibility(R.id.widgetWeatherHour, View.GONE)
+        view.setViewVisibility(R.id.widgetWeatherTime, View.GONE)
     }
 
     // Notify that the view have been updated
