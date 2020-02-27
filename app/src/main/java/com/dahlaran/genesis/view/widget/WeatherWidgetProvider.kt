@@ -45,14 +45,11 @@ class WeatherWidgetProvider : AppWidgetProvider() {
             // Request location if it change
             val requestLocation = LocationUtilis.requestCurrentPosition(context)
             // TODO: show success and failed graphic instead of toast
-            if (requestLocation) {
-                Toast.makeText(context, "Request Location Success", Toast.LENGTH_SHORT).show()
-            } else {
+            if (!requestLocation) {
                 Toast.makeText(context, "Request Location Failed", Toast.LENGTH_SHORT).show()
             }
 
             WeatherWidgetProviderModel.getInstance(context).singleObserverToPresenterWeatherLiveData(context)
-            //WeatherWidgetProviderModel.getInstance(context).presenter
             // Call presenter to get new weather even if the location didn't change
             WeatherWidgetProviderModel.getInstance(context).presenter.getWeatherUsingCoordinate(LocationUtilis.location.value)
         } else super.onReceive(context, intent)
@@ -60,6 +57,9 @@ class WeatherWidgetProvider : AppWidgetProvider() {
 
     override fun onUpdate(context: Context?, appWidgetManager: AppWidgetManager?, appWidgetIds: IntArray?) {
         updateView(context, appWidgetManager, appWidgetIds)
+        context?.let {
+            createRefreshDataPendingIntent(it).send()
+        }
     }
 
     private fun updateView(context: Context?, appWidgetManager: AppWidgetManager?, appWidgetIds: IntArray?) {
