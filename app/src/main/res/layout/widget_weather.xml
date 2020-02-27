@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetWeatherMain"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:maxHeight="@dimen/current_weather_max_height">
+
+    <ImageView
+        android:id="@+id/widgetWeatherImage"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:adjustViewBounds="true"
+        android:maxWidth="60dp"
+        android:src="@drawable/ic_no_media" />
+
+    <TextView
+        android:id="@+id/widgetWeatherTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="@dimen/base_margin"
+        android:text="No Time"
+        android:textIsSelectable="true"
+        android:textSize="@dimen/big_textSize" />
+
+    <ImageView
+        android:id="@+id/widgetWeatherRefreshImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/widgetWeatherTime"
+        android:layout_alignBottom="@id/widgetWeatherTime"
+        android:layout_toEndOf="@id/widgetWeatherTime"
+        android:src="@drawable/ic_wi_cloud_refresh" />
+
+    <TextView
+        android:id="@+id/widgetWeatherDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/widgetWeatherTime"
+        android:layout_marginTop="@dimen/very_small_margin"
+        android:layout_marginEnd="@dimen/base_margin"
+        android:text="Cloudy"
+        android:textIsSelectable="true"
+        android:textSize="@dimen/very_big_textSize"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_below="@id/widgetWeatherDescription"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/base_margin"
+        android:layout_toStartOf="@id/widgetWeatherImage"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/widgetWeatherTemperatureImage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_wi_thermometer" />
+
+        <ImageView
+            android:id="@+id/widgetWeatherCloudImage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_wi_cloud" />
+
+        <ImageView
+            android:id="@+id/widgetWeatherWindImage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_wi_sandstorm" />
+    </LinearLayout>
+</RelativeLayout>

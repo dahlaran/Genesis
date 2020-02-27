@@ -1,8 +1,10 @@
 package com.dahlaran.genesis.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-
+@Entity(tableName = "OpenWeatherApiWeather_table")
 data class OpenWeatherApiWeather(
     @SerializedName("coord") val coord: Coord,
     @SerializedName("weather") val weather: List<Weather>,
@@ -13,7 +15,10 @@ data class OpenWeatherApiWeather(
     @SerializedName("dt") val dt: Int,
     @SerializedName("sys") val sys: Sys,
     @SerializedName("timezone") val timezone: Int,
+    @PrimaryKey
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String,
-    @SerializedName("cod") val cod: Int
+    @SerializedName("cod") val cod: Int,
+    // Custom param
+    @SerializedName("timeOfCall") var timeOfCall: Long
 )
