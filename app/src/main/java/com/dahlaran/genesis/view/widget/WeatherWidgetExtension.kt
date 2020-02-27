@@ -21,23 +21,8 @@ internal fun WeatherWidgetProvider.updateWidget(context: Context, view: RemoteVi
 
     // TODO: Add widget in dark mode
 
-    // Go inside MainActivity when click on
-    val buttonIntent = Intent(context, MainActivity::class.java)
-    val buttonPendingIntent = PendingIntent.getActivity(
-        context,
-        0, buttonIntent, 0
-    )
-
-    view.setOnClickPendingIntent(R.id.widgetWeatherMain, buttonPendingIntent)
-
-    // Broadcast to refresh data
-    val refreshIntent = Intent(context, WeatherWidgetProvider::class.java)
-    refreshIntent.action = WeatherWidgetProvider.ACTION_REFRESH_DATA
-    val pendingIntent = PendingIntent.getBroadcast(
-        context, 0, refreshIntent, PendingIntent.FLAG_UPDATE_CURRENT
-    )
-    view.setOnClickPendingIntent(R.id.widgetWeatherRefreshImage, pendingIntent)
-
+    view.setOnClickPendingIntent(R.id.widgetWeatherMain, createGoActivityPendingIntent(context))
+    view.setOnClickPendingIntent(R.id.widgetWeatherRefreshImage, createRefreshDataPendingIntent(context))
 
     weather?.let {
         view.setViewVisibility(R.id.widgetWeatherTime, View.VISIBLE)
@@ -61,4 +46,17 @@ internal fun WeatherWidgetProvider.updateWidget(context: Context, view: RemoteVi
 
     // Notify that the view have been updated
     appWidgetManager.updateAppWidget(appWidgetId, view)
+}
+
+internal fun WeatherWidgetProvider.createRefreshDataPendingIntent(context: Context): PendingIntent {
+    val refreshIntent = Intent(context, WeatherWidgetProvider::class.java)
+
+    refreshIntent.action = WeatherWidgetProvider.ACTION_REFRESH_DATA
+    return PendingIntent.getBroadcast(context, 0, refreshIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+}
+
+internal fun WeatherWidgetProvider.createGoActivityPendingIntent(context: Context): PendingIntent {
+    val buttonIntent = Intent(context, MainActivity::class.java)
+
+    return PendingIntent.getActivity(context, 0, buttonIntent, 0)
 }

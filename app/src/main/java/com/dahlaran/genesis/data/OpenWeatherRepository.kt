@@ -89,15 +89,11 @@ object OpenWeatherRepository {
                 if (BuildConfig.DEBUG) {
                     Log.d(javaClass.simpleName, "Weather updated")
                 }
-            } else {
-                if (BuildConfig.DEBUG) {
-                    Log.d(javaClass.simpleName, "Weather not updated")
-                }
-            }
-        } else {
-            if (BuildConfig.DEBUG) {
+            } else if (BuildConfig.DEBUG) {
                 Log.d(javaClass.simpleName, "Weather not updated")
             }
+        } else if (BuildConfig.DEBUG) {
+            Log.d(javaClass.simpleName, "Weather not updated")
         }
     }
 
