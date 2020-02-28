@@ -26,7 +26,13 @@ object OpenWeatherRepository {
     private val openWeatherApiWeather: OpenWeatherApiManager = OpenWeatherApiManager()
     private lateinit var weatherDisposable: Disposable
 
-    fun initialiseWeatherValue(latitude: Int, longitude: Int): LiveData<OpenWeatherApiWeather?> {
+    fun getWeatherValue(latitude: Int, longitude: Int): LiveData<OpenWeatherApiWeather?> {
+        if (weatherLiveData.value != null && !needToMakeCall(weatherLiveData.value!!.timeOfCall)) {
+            // Post value to trigger the remove of loader
+            weatherLiveData.postValue(weatherLiveData.value)
+            return weatherLiveData
+        }
+
         // Get weather stored inside database
         getWeatherFromDatabase()
         // Remove dispose if it has been already initialise
@@ -73,10 +79,6 @@ object OpenWeatherRepository {
         }
     }
 
-    private fun removeDispose() {
-        if (this::weatherDisposable.isInitialized && !this.weatherDisposable.isDisposed) this.weatherDisposable.dispose()
-    }
-
     fun updateWeatherLiveData(weather: OpenWeatherApiWeather?) {
         if (weather == null && weatherLiveData.value == null) {
             weatherLiveData.postValue(weather)
@@ -99,5 +101,21 @@ object OpenWeatherRepository {
 
     fun getInstanceOfLiveData(): LiveData<OpenWeatherApiWeather?> {
         return weatherLiveData
+    }
+
+    private fun removeDispose() {
+        if (this::weatherDisposable.isInitialized && !this.weatherDisposable.isDisposed) this.weatherDisposable.dispose()
+    }
+
+    /**
+     * Method to know if a call is necessary to be launch,
+     * if at least a minute is not spend, no need to request an update
+     * @param lastCallTime time of the last call in millisecond
+     */
+    private fun needToMakeCall(lastCallTime: Long): Boolean {
+        val currentTime = System.currentTimeMillis()
+
+        // 60000 = 1 minute
+        return currentTime > lastCallTime + 60000
     }
 }
