@@ -13,7 +13,7 @@ class WidgetPresenter : WidgetPresenterInterface {
 
     override fun getWeatherUsingCoordinate(location: Location?) {
         location?.let {
-            OpenWeatherRepository.initialiseWeatherValue(it.latitude.toInt(), it.longitude.toInt())
+            OpenWeatherRepository.getWeatherValue(it.latitude.toInt(), it.longitude.toInt())
         } ?: run {
             OpenWeatherRepository.getWeatherFromDatabase()
         }
