@@ -9,40 +9,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.dahlaran.genesis.BuildConfig
 import com.dahlaran.genesis.models.OpenWeatherApiWeather
-import com.dahlaran.genesis.presenters.WidgetPresenter
 import com.dahlaran.genesis.presenters.WidgetPresenterInterface
 import com.dahlaran.genesis.utilis.LocationUtilis
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class WeatherWidgetProviderModel {
 
-    companion object {
-        private var instance: WeatherWidgetProviderModel? = null
-        fun getInstance(context: Context): WeatherWidgetProviderModel {
-            if (instance == null) {
-                synchronized(WeatherWidgetProviderModel::class) {
-                    // Prevent multiple instances (https://portabledroid.wordpress.com/2018/08/09/fast-locking-in-android-with-kotlin/)
-                    if (instance == null) {
-                        instance = WeatherWidgetProviderModel()
-                        instance!!.initializeLiveData(context)
-                    }
-                }
-            }
-            return instance!!
-        }
-    }
+@Singleton
+class WeatherWidgetProviderModel @Inject constructor(context: Context) {
 
     var weatherLiveData: LiveData<OpenWeatherApiWeather?>? = null
+    @Inject
     lateinit var presenter: WidgetPresenterInterface
 
     private lateinit var locationObserver: Observer<Location?>
     // Single observer
     private lateinit var weatherLiveDataObserver: Observer<OpenWeatherApiWeather?>
 
+    init {
+        initializeLiveData(context)
+    }
+
     // Initialize LiveData and Observable
     private fun initializeLiveData(context: Context) {
-        if (!::presenter.isInitialized) {
-            presenter = WidgetPresenter()
-        }
 
         if (!::weatherLiveDataObserver.isInitialized) {
             weatherLiveDataObserver = Observer {
@@ -69,9 +58,6 @@ class WeatherWidgetProviderModel {
             locationObserver = Observer { location ->
                 if (BuildConfig.DEBUG) {
                     Log.d(javaClass.simpleName, "Observe location = $location")
-                }
-                if (!::presenter.isInitialized) {
-                    presenter = WidgetPresenter()
                 }
                 singleObserverToPresenterWeatherLiveData(context)
                 presenter.getWeatherUsingCoordinate(location)
@@ -104,7 +90,6 @@ class WeatherWidgetProviderModel {
         if (::locationObserver.isInitialized) {
             LocationUtilis.location.removeObserver(locationObserver)
         }
-        instance = null
     }
 
     private fun removeWeatherDataObserver() {

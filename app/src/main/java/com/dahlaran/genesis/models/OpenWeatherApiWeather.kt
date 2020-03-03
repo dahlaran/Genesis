@@ -3,9 +3,10 @@ package com.dahlaran.genesis.models
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import javax.inject.Inject
 
 @Entity(tableName = "OpenWeatherApiWeather_table")
-data class OpenWeatherApiWeather(
+data class OpenWeatherApiWeather @Inject constructor(
     @SerializedName("coord") val coord: Coord,
     @SerializedName("weather") val weather: List<Weather>,
     @SerializedName("base") val base: String,

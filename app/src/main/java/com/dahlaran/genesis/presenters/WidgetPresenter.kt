@@ -4,18 +4,19 @@ import android.location.Location
 import androidx.lifecycle.LiveData
 import com.dahlaran.genesis.data.OpenWeatherRepository
 import com.dahlaran.genesis.models.OpenWeatherApiWeather
+import javax.inject.Inject
 
-class WidgetPresenter : WidgetPresenterInterface {
+class WidgetPresenter @Inject constructor(private val openWeatherRepository: OpenWeatherRepository) : WidgetPresenterInterface {
 
     override fun getLiveData(): LiveData<OpenWeatherApiWeather?> {
-        return OpenWeatherRepository.getInstanceOfLiveData()
+        return openWeatherRepository.getInstanceOfLiveData()
     }
 
     override fun getWeatherUsingCoordinate(location: Location?) {
         location?.let {
-            OpenWeatherRepository.getWeatherValue(it.latitude.toInt(), it.longitude.toInt())
+            openWeatherRepository.getWeatherValue(it.latitude.toInt(), it.longitude.toInt())
         } ?: run {
-            OpenWeatherRepository.getWeatherFromDatabase()
+            openWeatherRepository.getWeatherFromDatabase()
         }
     }
 }

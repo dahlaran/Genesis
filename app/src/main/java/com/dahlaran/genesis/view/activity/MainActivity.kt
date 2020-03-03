@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.dahlaran.genesis.BuildConfig
 import com.dahlaran.genesis.R
 import com.dahlaran.genesis.utilis.LocationUtilis
+import com.dahlaran.genesis.viewmodels.ViewModelFactory
 import com.dahlaran.genesis.viewmodels.WeatherViewModel
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
@@ -20,15 +24,20 @@ class MainActivity : BaseActivity() {
             getWeather()
         }
     }
+    @Inject
+    internal lateinit var viewModelFactory: ViewModelFactory
 
     private var currentLocation: Location? = null
     private lateinit var weatherViewModel: WeatherViewModel
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidInjection.inject(this)
+
         setContentView(R.layout.activity_main)
 
-        weatherViewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
+        weatherViewModel = ViewModelProvider(this, viewModelFactory).get(WeatherViewModel::class.java)
 
         // Check if locationUtilis has been launched
         if (!LocationUtilis.hasBeenSuccessfullyLaunch) {

@@ -38,7 +38,7 @@ object LocationUtilis : LocationListener {
         }
 
         override fun onProviderDisabled(provider: String?) {
-            GenesisApplication.instance.startLocationSourceSettingsActivity()
+            //GenesisApplication.instance.startLocationSourceSettingsActivity()
         }
     }
 
@@ -109,7 +109,7 @@ object LocationUtilis : LocationListener {
     }
 
     override fun onProviderDisabled(provider: String?) {
-        GenesisApplication.instance.startLocationSourceSettingsActivity()
+        //GenesisApplication.instance.startLocationSourceSettingsActivity()
     }
 
     fun requestCurrentPosition(context: Context): Boolean {

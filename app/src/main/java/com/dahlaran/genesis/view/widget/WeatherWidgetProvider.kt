@@ -10,9 +10,13 @@ import android.widget.RemoteViews
 import android.widget.Toast
 import com.dahlaran.genesis.R
 import com.dahlaran.genesis.utilis.LocationUtilis
+import javax.inject.Inject
 
 
 class WeatherWidgetProvider : AppWidgetProvider() {
+
+    @Inject
+    lateinit var providerModel: WeatherWidgetProviderModel
 
     companion object {
         const val ACTION_REFRESH_DATA = "com.dahlaran.genesis.ACTION_REFRESH_DATA"
@@ -21,15 +25,13 @@ class WeatherWidgetProvider : AppWidgetProvider() {
 
     override fun onEnabled(context: Context?) {
         super.onEnabled(context)
-        context?.let {
-            WeatherWidgetProviderModel.getInstance(it)
-        }
+
     }
 
     override fun onDisabled(context: Context?) {
         super.onDisabled(context)
         context?.let {
-            WeatherWidgetProviderModel.getInstance(it).removeLiveDataObserver()
+            providerModel.removeLiveDataObserver()
         }
     }
 
@@ -49,9 +51,9 @@ class WeatherWidgetProvider : AppWidgetProvider() {
                 Toast.makeText(context, "Request Location Failed", Toast.LENGTH_SHORT).show()
             }
 
-            WeatherWidgetProviderModel.getInstance(context).singleObserverToPresenterWeatherLiveData(context)
+            providerModel.singleObserverToPresenterWeatherLiveData(context)
             // Call presenter to get new weather even if the location didn't change
-            WeatherWidgetProviderModel.getInstance(context).presenter.getWeatherUsingCoordinate(LocationUtilis.location.value)
+            providerModel.presenter.getWeatherUsingCoordinate(LocationUtilis.location.value)
         } else super.onReceive(context, intent)
     }
 
@@ -67,7 +69,7 @@ class WeatherWidgetProvider : AppWidgetProvider() {
             appWidgetIds?.forEach { id ->
                 val remoteViews = RemoteViews(context.packageName, R.layout.widget_weather)
 
-                updateWidget(context, remoteViews, appWidgetManager, id, WeatherWidgetProviderModel.getInstance(context).weatherLiveData?.value)
+                updateWidget(context, remoteViews, appWidgetManager, id, providerModel.weatherLiveData?.value)
             }
         }
     }
@@ -77,7 +79,7 @@ class WeatherWidgetProvider : AppWidgetProvider() {
         if (context != null && appWidgetManager != null) {
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_weather)
 
-            updateWidget(context, remoteViews, appWidgetManager, appWidgetId, WeatherWidgetProviderModel.getInstance(context).weatherLiveData?.value)
+            updateWidget(context, remoteViews, appWidgetManager, appWidgetId, providerModel.weatherLiveData?.value)
         }
     }
 }

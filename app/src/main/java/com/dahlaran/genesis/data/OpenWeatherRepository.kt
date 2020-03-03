@@ -4,23 +4,23 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dahlaran.genesis.BuildConfig
-import com.dahlaran.genesis.data.database.OpenWeatherApiWeatherDatabase
+import com.dahlaran.genesis.data.database.OpenWeatherApiWeatherDao
 import com.dahlaran.genesis.data.network.OpenWeatherApiManager
 import com.dahlaran.genesis.models.OpenWeatherApiWeather
-import com.dahlaran.genesis.view.GenesisApplication
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Singleton
 
-object OpenWeatherRepository {
+@Singleton
+class OpenWeatherRepository @Inject
+constructor(private val openWeatherApiWeatherDao: OpenWeatherApiWeatherDao) {
     // LiveData who contain weather
     private val weatherLiveData = MutableLiveData<OpenWeatherApiWeather?>()
-
-    // Room
-    private val openWeatherApiWeatherDao = OpenWeatherApiWeatherDatabase.getInstance(GenesisApplication.instance.applicationContext).openWeatherApiWeatherDao()
 
     // Network
     private val openWeatherApiWeather: OpenWeatherApiManager = OpenWeatherApiManager()
