@@ -48,7 +48,7 @@ class WeatherWidgetProviderModel {
             weatherLiveDataObserver = Observer {
 
                 if (BuildConfig.DEBUG) {
-                    Log.d(javaClass.simpleName, "Weather observer updated")
+                    Log.d(javaClass.simpleName, "Weather observer updated = $it")
                 }
                 // Create intent and broadcast to notify widgets when data changes
                 val updateIntent = Intent(context, WeatherWidgetProvider::class.java)
