@@ -6,8 +6,10 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.RemoteViews
 import android.widget.Toast
+import com.dahlaran.genesis.BuildConfig
 import com.dahlaran.genesis.R
 import com.dahlaran.genesis.utilis.LocationUtilis
 
@@ -35,7 +37,9 @@ class WeatherWidgetProvider : AppWidgetProvider() {
 
     override fun onReceive(context: Context?, intent: Intent) {
         val action = intent.action
-
+        if (BuildConfig.DEBUG) {
+            Log.d(javaClass.simpleName, "Weather observer updated = $action")
+        }
         if (action == ACTION_UPDATE_DATA && context != null) {
             val appWidgetManager = AppWidgetManager.getInstance(context)
             val ids = appWidgetManager.getAppWidgetIds(ComponentName(context, WeatherWidgetProvider::class.java))
