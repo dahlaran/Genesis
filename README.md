@@ -6,5 +6,5 @@ With differents notions like:
 - Location of the device, using Network (TODO: add GPS)
 - Room database
 - Widget
-- Dagger (TODO)
+- Dagger (Doing)
 - Dark mode (TODO: App + Widget)
